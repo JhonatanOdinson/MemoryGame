@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dea69d41f90c6ea4fa55c27c1d60c145, type: 3}
-  m_Name: AddressableAssetGroupSortSettings
+  m_Script: {fileID: 11500000, guid: b80c374f210debb44b801ea93a47ce0f, type: 3}
+  m_Name: GameConfig
   m_EditorClassIdentifier: 
-  sortOrder:
-  - b54bdf5a2154a3a4daf331297b9b85d7
-  - 3f06ef8a2654dc744a7807c26a7dd335
-  - 251008030d5551b49970fb641c8b16cd
-  - 916bded0733fbe24b8a4bc1e38b383a5
+  _cardCount: 6
+  _jsonUrl: 1blPnqwKdtrjbA_eOA7vAsPpm5lWnvbRS

@@ -31,15 +31,16 @@ namespace Core
         #endregion
 
         [SerializeField] private UiCanvas _uiCanvas;
-
         [SerializeField] private TouchInputController _touchInputController;
-        
-      
         [SerializeField] private GameStateController _gameStateController;
+        [SerializeField] private GameProcessController _gameProcessController;
+        [SerializeField] private ResourceController _resourceController;
 
         public static TouchInputController TouchInputController => _instance._touchInputController;
         public static UiCanvas UiCanvas => _instance._uiCanvas;
         public static GameStateController GameStateController => _instance._gameStateController;
+        public static GameProcessController GameProcessController => _instance._gameProcessController;
+        public static ResourceController ResourceController => _instance._resourceController;
 
         public static void LoadInstance()
         {
@@ -62,7 +63,8 @@ namespace Core
 
         public void InitGlobal()
         {
-            //_gameStateController.Init();
+            _resourceController.Init();
+            _gameProcessController.Init();
             _touchInputController.Init();
         }
 
@@ -70,6 +72,8 @@ namespace Core
         {
             _uiCanvas.Destruct();
             _touchInputController.Free();
+            _gameProcessController.Free();
+            _resourceController.Free();
         }
     }
 }
