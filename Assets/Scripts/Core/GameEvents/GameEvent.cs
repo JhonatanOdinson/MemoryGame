@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SOE.GameEvents;
 using UnityEngine;
 
 namespace Core.GameEvents {
   [CreateAssetMenu(fileName = "newGameEvent", menuName = "ScriptableData/SOE/Game Events/GameEvent")]
-  public partial class GameEvent : ScriptableObject {
+  public class GameEvent : ScriptableObject {
     
     //check all already subscribed 
     [NonSerialized]

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Modules.UI.Interface;
+using Modules.ScriptableObjects;
 using Modules.UI.Window;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Library.Scripts.Modules.Ui
+namespace Modules.UI
 {
    public class UiCanvas : MonoBehaviour
    {
@@ -16,8 +15,6 @@ namespace Library.Scripts.Modules.Ui
       [SerializeField] private CanvasGroup _canvasGroup;
 
       [SerializeField] private List<WindowBase> _windowList = new();
-
-      public event Action OnUpdateWindow; 
 
       public void Init(IEnumerable<WindowData> windowList)
       {
@@ -32,22 +29,7 @@ namespace Library.Scripts.Modules.Ui
       public T GetWindow<T>() where T : WindowBase {
          return (T) _windowList.First(e => e.GetType() == typeof(T));
       }
-      
-      private void FixedUpdate()
-      {
-         //OnUpdateWindow?.Invoke();
-      }
 
-      public static Vector2 WorldToUISpace(Camera cam/*,RectTransform parent*/, Vector3 worldPos) {
-         return cam.WorldToScreenPoint(worldPos);
-         
-        /* Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
-         Vector2 movePos = Vector2.zero;
-         RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPos,
-            null, out movePos);
-         return movePos;*/
-      }
-      
       public void Destruct()
       {
          foreach (WindowBase windowBase in _windowList)

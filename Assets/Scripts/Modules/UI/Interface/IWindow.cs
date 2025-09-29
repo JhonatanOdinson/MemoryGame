@@ -1,5 +1,4 @@
-﻿using Library.Scripts.Modules.Ui;
-using Modules.Objects.Interface;
+﻿using Modules.ScriptableObjects;
 using UnityEngine;
 
 namespace Modules.UI.Interface {

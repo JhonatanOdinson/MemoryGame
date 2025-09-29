@@ -1,5 +1,5 @@
-using Library.Scripts.Modules.Tools;
 using Modules.ScriptableObjects.GameConfig;
+using Modules.Tools;
 
 namespace Core {
     public static class GameDirector {

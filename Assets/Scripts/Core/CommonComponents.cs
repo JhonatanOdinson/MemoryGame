@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Library.Scripts.Modules.Tools;
-using Library.Scripts.Modules.Ui;
+using Modules.Tools;
+using Modules.UI;
 using UnityEngine;
 
 namespace Core

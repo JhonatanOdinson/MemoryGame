@@ -10,8 +10,8 @@ namespace Core
 {
     public class ResourceController : MonoBehaviour
     {
-        [SerializeField] private Dictionary<string, Texture2D> _imageCache = new();
-        [SerializeField] private List<CardData> _jsonCardData = new();
+        private Dictionary<string, Texture2D> _imageCache = new();
+        private List<CardData> _jsonCardData = new();
 
         public List<CardData> JsonCardData => _jsonCardData;
 
@@ -37,8 +37,6 @@ namespace Core
                 OnCacheUpdated.Check(null,null);
             }
         }
-
-        
 
         public async UniTask<List<T>> ParseFromJson<T>(string jsonId)
         {

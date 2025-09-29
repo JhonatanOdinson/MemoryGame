@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Library.Scripts.Modules.Ui;
+using Modules.ScriptableObjects;
 using UnityEngine;
 
 namespace Core {

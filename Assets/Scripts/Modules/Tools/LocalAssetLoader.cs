@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
-namespace Library.Scripts.Modules.Tools {
+namespace Modules.Tools {
   public static class LocalAssetLoader {
     /// <summary>
     /// Instantiate an asset from Addressables. In constructors need to be used instantly

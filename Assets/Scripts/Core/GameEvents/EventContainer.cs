@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SOE.GameEvents {
+namespace Core.GameEvents {
   [Serializable]
   public class EventContainer {
     public Action<object> OnComplete;

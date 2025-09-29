@@ -1,4 +1,4 @@
-using Library.Scripts.Modules.Ui;
+using Modules.ScriptableObjects;
 using Modules.UI.Interface;
 using UnityEngine;
 

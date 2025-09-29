@@ -1,5 +1,5 @@
 
-namespace Modules.Objects.Interface {
+namespace Modules.UI.Interface {
   public interface IDestructable {
     public void Destruct();
   }

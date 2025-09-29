@@ -2,7 +2,7 @@ using Modules.Tool;
 using Modules.UI.Window;
 using UnityEngine;
 
-namespace Library.Scripts.Modules.Ui
+namespace Modules.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "WindowData", menuName = "ScriptableData/UI/WindowData")]
     public class WindowData : ScriptableObject

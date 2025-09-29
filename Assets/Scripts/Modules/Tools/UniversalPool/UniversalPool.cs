@@ -4,7 +4,7 @@ using Unity.Collections;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Modules.Tool.UniversalPool {
+namespace Modules.Tools.UniversalPool {
   [Serializable]
   public class UniversalPool<T> : IPool {
     [SerializeField] private PoolableItem _prefab;
