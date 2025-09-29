@@ -10,6 +10,11 @@ namespace Modules.UI.Window.ScoreWindow
         public void Init(WindowBase windowBase)
         {
             _window = (UiScoreWindow)windowBase;
+            
+            if (_window.Data.ShowOnStart)
+                ShowWindow(true);
+            else
+                HideWindow(true);
         }
 
         public void ShowWindow(object obj)

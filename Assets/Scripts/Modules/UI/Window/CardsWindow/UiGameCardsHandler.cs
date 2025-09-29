@@ -11,9 +11,9 @@ namespace Modules.UI.Window.CardsWindow
     {
         private UiGameCardsWindow _window;
 
-        public GameEvent OnGamePrepared;
-        public GameEvent OnGameStart;
-        public GameEvent OnPairFound;
+        [SerializeField] private GameEvent OnGamePrepared;
+        [SerializeField] private GameEvent OnGameStart;
+        [SerializeField] private GameEvent OnPairFound;
         
         
         public void Init(WindowBase window)

@@ -1,9 +1,11 @@
 using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Modules.Tools.GoogleDrive
 {
@@ -11,8 +13,8 @@ namespace Modules.Tools.GoogleDrive
     {
         public static DriveService GetDriveService()
         {
-            var credential = GoogleCredential.FromFile("Assets/ScriptableData/DriveAuth/credentials.json")
-                .CreateScoped(DriveService.Scope.Drive);
+            
+            var credential = LoadCredentialAsset();
 
             return new DriveService(new BaseClientService.Initializer
             {
@@ -22,24 +24,41 @@ namespace Modules.Tools.GoogleDrive
 
         }
 
-        public static string DownloadJson(string fileId)
+        private static GoogleCredential LoadCredentialAsset()
         {
-            try
-            {
-                var service = GetDriveService();
+            TextAsset credentialAsset = Resources.Load<TextAsset>("DriveAuth/credentials");
+            string json = credentialAsset.text;
+            return CreateFileFromStream(json);
+        }
 
-                var request = service.Files.Get(fileId);
-                var stream = new MemoryStream();
-                request.Download(stream);
+        private static GoogleCredential CreateFileFromStream(string json)
+        {
+            var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
+            var credential = GoogleCredential.FromStream(stream)
+                .CreateScoped(DriveService.Scope.Drive);
+            return credential;
+        }
 
-                string json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-                
-                return json;
-            }
-            catch (Exception ex)
+        private static string GetLinkById(string fileId)
+        {
+            string url = $"https://drive.google.com/uc?export=download&id={fileId}";
+            return url;
+        }
+
+        public static async UniTask<string> DownloadJson(string fileId)
+        {
+            
+            using (UnityWebRequest request = UnityWebRequest.Get(GetLinkById(fileId)))
             {
-                Debug.LogError("Error while downloading!: " + ex);
-                return null;
+                await request.SendWebRequest();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Error while downloading!: " + request.error);
+                    return null;
+                }
+
+                return request.downloadHandler.text;
             }
         }
 
@@ -48,39 +67,28 @@ namespace Modules.Tools.GoogleDrive
             var service = GetDriveService();
             var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(jsonContent));
             stream.Position = 0;
-            
-            var file = service.Files.Get(fileId).Execute();
-            Debug.Log("MIME: " + file.MimeType);
-
-
+          
             var updateRequest = service.Files.Update(null, fileId, stream, "application/json");
             updateRequest.Upload();
-
-
-
+            
             Debug.Log("Json successfully Update!!! ");
         }
         
-        public static Texture2D DownloadImage(string fileId)
+        public static async UniTask<Texture2D> DownloadImage(string fileId)
         {
-            try
+            using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(GetLinkById(fileId)))
             {
-                var service = GetDriveService();
-                var request = service.Files.Get(fileId);
-                var stream = new MemoryStream();
-                request.Download(stream);
+                await request.SendWebRequest();
 
-                byte[] imageData = stream.ToArray();
-                Texture2D texture = new Texture2D(2, 2);
-                texture.LoadImage(imageData);
-                
-                return texture;
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError($"Error while downloading image!: {request.error}");
+                    return null;
+                }
+
+                return DownloadHandlerTexture.GetContent(request);
             }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error while downloading image: " + ex.Message);
-                return null;
-            }
+            
         }
 
 

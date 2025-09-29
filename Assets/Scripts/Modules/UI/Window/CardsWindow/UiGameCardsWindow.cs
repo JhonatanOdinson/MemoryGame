@@ -26,12 +26,12 @@ namespace Modules.UI.Window.CardsWindow
             gameObject.SetActive(true);
         }
 
-        public async void FillGameField(List<CardData> sequence)
+        public void FillGameField(List<CardData> sequence)
         {
             FreeCardPool();
             foreach (var cardData in sequence)
-            {
-                await CreateCard(cardData);
+            { 
+                CreateCard(cardData);
             }
         }
 
@@ -44,10 +44,10 @@ namespace Modules.UI.Window.CardsWindow
             }
         }
 
-        public async UniTask CreateCard(CardData cardData) {
+        public void CreateCard(CardData cardData) {
             UiGameCardItem cardItem = _cardPool.Take();
             cardItem.Init(cardData);
-            cardItem.SetImage(await _provider.GetImage(cardData));
+            cardItem.SetImage(_provider.GetImage(cardData));
             cardItem.Show(true);
             cardItem.SetInteractive(false);
             cardItem.OnCardSelected += OnCardSelectedHandler;

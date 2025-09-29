@@ -16,20 +16,19 @@ namespace Core
         private int _delayAfterFinish;
         private int _sessionCollectedPairs;
 
-        public GameEvent OnGamePrepared;
-        public GameEvent OnGameStart;
+        [SerializeField] private GameEvent OnGamePrepared;
+        [SerializeField] private GameEvent OnGameStart;
 
-        public GameEvent OnPairFounded;
-        public GameEvent OnScoreUpdate;
+        [SerializeField] private GameEvent OnPairFounded;
+        [SerializeField] private GameEvent OnScoreUpdate;
 
         public void Init()
         {
             _sequenceSize = GameDirector.GetGameConfig.CardCount;
             _cardShowTime = GameDirector.GetGameConfig.CardShowTime;
             _delayAfterFinish = GameDirector.GetGameConfig.DelayAfterFinish;
-            string jsonUrl = GameDirector.GetGameConfig.JsonUrl;
-            
-            _cardDataList = CommonComponents.ResourceController.ParseFromJson<CardData>(jsonUrl);
+
+            _cardDataList = CommonComponents.ResourceController.JsonCardData;
             Subscribes();
         }
 
@@ -78,7 +77,6 @@ namespace Core
             List<CardData> _cardDataSequence = GetRandomCard(_cardDataList, _sequenceSize / 2);
             _cardDataSequence.AddRange(_cardDataSequence);
             _cardDataSequence = ShuffleSequence(_cardDataSequence);
-
             return _cardDataSequence;
         }
 

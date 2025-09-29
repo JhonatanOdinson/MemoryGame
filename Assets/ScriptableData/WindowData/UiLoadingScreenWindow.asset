@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 152f76b49d2819948a1414b57a61c453, type: 3}
-  m_Name: UiScoreWindow
+  m_Name: UiLoadingScreenWindow
   m_EditorClassIdentifier: 
-  _showOnStart: 0
+  _showOnStart: 1
   _windowRef:
-    m_AssetGUID: 3239d781dd6451a4a8e592e843741218
+    m_AssetGUID: 28da79f95aa6c4e44b4827d03ec9e7cb
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

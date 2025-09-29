@@ -55,9 +55,9 @@ namespace Modules.UI.Window.CardsWindow
             _pairList.Clear();
         }
 
-        public async UniTask<Sprite> GetImage(CardData cardData)
+        public Sprite GetImage(CardData cardData)
         {
-            return await _resourceController.GetImage(cardData.CardId, cardData.Url);
+            return _resourceController.GetImage(cardData.CardId);
         }
         
         public void ShowWindow(object obj)

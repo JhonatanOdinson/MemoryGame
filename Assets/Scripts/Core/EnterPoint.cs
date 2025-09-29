@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Library.Scripts.Modules.Ui;
 using UnityEngine;
 
@@ -14,12 +15,14 @@ namespace Core {
     
     public IEnumerable<WindowData> LoadWindowList => _loadWindowList;
 
-    async void Start() {
+    async void Start()
+    {
+      Application.targetFrameRate = 60;
       if(_isInitGC) return;
       await Init();
     }
 
-    public async Task Init() {
+    public async UniTask Init() {
       if(_initProcess) return;
       _initProcess = true;
       GameDirector.SetEnterPoint(this);
@@ -29,10 +32,9 @@ namespace Core {
       OnEnterPointInited?.Invoke();
     }
 
-    private async Task InitGlobalControllers() {
+    private async UniTask InitGlobalControllers() {
       CommonComponents.LoadInstance();
       await CommonComponents.Instance.LoadData();
-      CommonComponents.Instance.InitGlobal();
       _isInitGC = true;
     }
     

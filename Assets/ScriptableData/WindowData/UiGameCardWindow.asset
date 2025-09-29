@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152f76b49d2819948a1414b57a61c453, type: 3}
   m_Name: UiGameCardWindow
   m_EditorClassIdentifier: 
-  _showOnStart: 1
+  _showOnStart: 0
   _windowRef:
     m_AssetGUID: a019e25e2e6d12c47ac38f959cb7b66b
     m_SubObjectName: 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Library.Scripts.Modules.Tools;
 using Library.Scripts.Modules.Ui;
 using UnityEngine;
@@ -43,22 +44,18 @@ namespace Core
             DontDestroyOnLoad(_instance.gameObject);
         }
 
-        public async Task Init(EnterPoint enterPoint)
+        public async UniTask Init(EnterPoint enterPoint)
         {
             _uiCanvas.Init(enterPoint.LoadWindowList);
+            await _resourceController.Init();
+            _gameProcessController.Init();
         }
 
         public async Task LoadData()
         {
             await Task.WhenAll(
-               
+                    
             );
-        }
-
-        public void InitGlobal()
-        {
-            _resourceController.Init();
-            _gameProcessController.Init();
         }
 
         public void FreeControllers()

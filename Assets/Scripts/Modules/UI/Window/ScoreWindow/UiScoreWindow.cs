@@ -15,6 +15,7 @@ namespace Modules.UI.Window.ScoreWindow
             _provider.Init(this);
             _handler.Init(this);
             _scoreText.Init();
+            
         }
         public override void FreeWindow() { }
 

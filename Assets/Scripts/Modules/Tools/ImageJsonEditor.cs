@@ -4,7 +4,7 @@ using Modules.UI.Window.CardsWindow.CardItem;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
 namespace Modules.Tools
 {
     public class ImageJsonEditor : EditorWindow
@@ -57,9 +57,9 @@ namespace Modules.Tools
             }
         }
 
-        private void LoadJsonFromDrive()
+        private async void LoadJsonFromDrive()
         {
-            string json = GoogleDriveHelper.DownloadJson(driveJsonId);
+            string json = await GoogleDriveHelper.DownloadJson(driveJsonId);
             entries = JsonConvert.DeserializeObject<List<CardData>>(json);
         }
         
@@ -71,3 +71,4 @@ namespace Modules.Tools
 
     }
 }
+#endif
