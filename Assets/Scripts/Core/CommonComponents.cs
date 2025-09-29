@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using Library.Scripts.Core;
 using Library.Scripts.Modules.Tools;
 using Library.Scripts.Modules.Ui;
-using Modules.Input;
 using UnityEngine;
 
 namespace Core
@@ -31,14 +29,10 @@ namespace Core
         #endregion
 
         [SerializeField] private UiCanvas _uiCanvas;
-        [SerializeField] private TouchInputController _touchInputController;
-        [SerializeField] private GameStateController _gameStateController;
         [SerializeField] private GameProcessController _gameProcessController;
         [SerializeField] private ResourceController _resourceController;
-
-        public static TouchInputController TouchInputController => _instance._touchInputController;
+        
         public static UiCanvas UiCanvas => _instance._uiCanvas;
-        public static GameStateController GameStateController => _instance._gameStateController;
         public static GameProcessController GameProcessController => _instance._gameProcessController;
         public static ResourceController ResourceController => _instance._resourceController;
 
@@ -57,7 +51,7 @@ namespace Core
         public async Task LoadData()
         {
             await Task.WhenAll(
-                //_objectPoolController.LoadData()
+               
             );
         }
 
@@ -65,13 +59,11 @@ namespace Core
         {
             _resourceController.Init();
             _gameProcessController.Init();
-            _touchInputController.Init();
         }
 
         public void FreeControllers()
         {
             _uiCanvas.Destruct();
-            _touchInputController.Free();
             _gameProcessController.Free();
             _resourceController.Free();
         }

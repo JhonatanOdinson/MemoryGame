@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   _cardCount: 6
+  _cardShowTime: 5
+  _delayAfterMistake: 1
+  _delayAfterCorrect: 1
+  _delayAfterFinish: 2
   _jsonUrl: 1blPnqwKdtrjbA_eOA7vAsPpm5lWnvbRS

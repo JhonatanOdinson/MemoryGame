@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Core;
+using System.Linq;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Modules.Tool.UniversalPool;
 using Modules.UI.Interface;
 using Modules.UI.Window.CardsWindow.CardItem;
@@ -15,16 +14,11 @@ namespace Modules.UI.Window.CardsWindow
         [SerializeField] private UiGameCardsHandler _handler;
         [SerializeField] private UniversalPool<UiGameCardItem> _cardPool;
 
-        private ResourceController _resourceController;
-        
         public override void Init()
         {
             _provider.Init(this);
             _handler.Init(this);
-
-            _resourceController = CommonComponents.ResourceController;
             _cardPool.Initialize();
-            FillGameField();
         }
 
         public override void Show()
@@ -32,30 +26,64 @@ namespace Modules.UI.Window.CardsWindow
             gameObject.SetActive(true);
         }
 
-        public async void FillGameField()
+        public async void FillGameField(List<CardData> sequence)
         {
-            List<CardData> sequence = CommonComponents.GameProcessController.CreateSequence();
+            FreeCardPool();
             foreach (var cardData in sequence)
             {
-                await CreateBar(cardData);
+                await CreateCard(cardData);
             }
         }
 
-        public async UniTask CreateBar(CardData cardData) {
+        public void FlipAllCard()
+        {
+            foreach (var cardItem in _cardPool.GetBusy())
+            {
+                cardItem.Flip();
+                cardItem.SetInteractive(true);
+            }
+        }
+
+        public async UniTask CreateCard(CardData cardData) {
             UiGameCardItem cardItem = _cardPool.Take();
             cardItem.Init(cardData);
-            cardItem.SetImage(await _resourceController.GetImage(cardData.CardId, cardData.Url));
+            cardItem.SetImage(await _provider.GetImage(cardData));
             cardItem.Show(true);
+            cardItem.SetInteractive(false);
+            cardItem.OnCardSelected += OnCardSelectedHandler;
+        }
+
+        public void FreeCardPool()
+        {
+            List<UiGameCardItem> cardItems = _cardPool.GetBusy().ToList();
+            for (int i = 0; i < cardItems.Count(); i++)
+            {
+                cardItems[i].OnCardSelected -= OnCardSelectedHandler;
+                FreeСard(cardItems[i]);
+            }
+        }
+
+        private void OnCardSelectedHandler(UiGameCardItem cardData)
+        {
+            cardData.SetInteractive(false);
+            _provider.AddPair(cardData);
+        }
+
+        public void OnPairFoundHandler(bool pairIsValid)
+        {
+            if (pairIsValid)
+            {
+                _handler.OnPairFoundHandler();
+            }
+        }
+        
+        public void FreeСard(UiGameCardItem cardItem) {
+            _cardPool.Return(cardItem);
         }
 
         public override void Hide()
         {
             gameObject.SetActive(false);
-        }
-
-        public void KillTweens()
-        {
-            DOTween.Kill("ShowBg",true);
         }
 
         public override IWindowProvider GetProvider()
@@ -65,15 +93,15 @@ namespace Modules.UI.Window.CardsWindow
 
         public override void FreeWindow()
         {
-            _cardPool.Clear();
+            FreeCardPool();
         }
         
         public override void Destruct()
         {
             FreeWindow();
+            FreeCardPool();
             _provider.Destruct();
             _handler.Destruct();
-            KillTweens();
         }
     }
 }

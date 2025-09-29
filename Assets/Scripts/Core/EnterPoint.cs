@@ -1,32 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core;
 using Library.Scripts.Modules.Ui;
 using UnityEngine;
 
-namespace Library.Scripts.Core {
+namespace Core {
   public class EnterPoint : MonoBehaviour {
     private static bool _isInitGC = false;
     private bool _initProcess = false;
     private bool _destructProcess;
     [SerializeField] private List<WindowData> _loadWindowList = new List<WindowData>();
-    [SerializeField] private SceneComponents _sceneComponents;
-    //[SerializeField] private Transform _actorContainer;
     public Action OnEnterPointInited;
     
-    public SceneComponents SceneComponentsRef => _sceneComponents;
     public IEnumerable<WindowData> LoadWindowList => _loadWindowList;
-    //public Transform ActorContainer => _actorContainer;
-    public bool DestructProcess => _destructProcess;
 
     async void Start() {
       if(_isInitGC) return;
       await Init();
-    }
-
-    private void Update() {
-      if (!_isInitGC) return;
     }
 
     public async Task Init() {
@@ -36,9 +26,7 @@ namespace Library.Scripts.Core {
       if (!_isInitGC)
         await InitGlobalControllers();
       await CommonComponents.Instance.Init(this);
-      _sceneComponents?.Init();
-     OnEnterPointInited?.Invoke();
-      //SceneLoader.Instance.OnLoadStart += Destruct;
+      OnEnterPointInited?.Invoke();
     }
 
     private async Task InitGlobalControllers() {
@@ -59,7 +47,6 @@ namespace Library.Scripts.Core {
       _destructProcess = true;
       StopAllCoroutines();
       CommonComponents.Instance.FreeControllers();
-      SceneComponentsRef?.Destruct();
     }
   }
 }
